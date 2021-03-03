@@ -1,2 +1,2 @@
 # BDSM
-Yes
+BDSM stands for 'Best Digital Spam Mailer'

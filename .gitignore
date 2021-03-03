@@ -102,3 +102,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+bdsm-frontend/.idea/
+.idea/
