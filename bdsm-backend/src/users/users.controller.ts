@@ -1,5 +1,6 @@
-import {Controller, Get, Param, Post} from '@nestjs/common';
+import {Body, Controller, Get, HttpCode, Param, Post} from '@nestjs/common';
 import {UsersService} from "./users.service";
+import {CreateUserDto} from "./dto/create-user.dto";
 
 @Controller('users')
 export class UsersController {
@@ -8,17 +9,20 @@ export class UsersController {
     }
 
     @Post()
-    createUser(): string {
-        return this.usersService.createUser();
+    @HttpCode(200)
+    async createUser(@Body() createUserDto: CreateUserDto) {
+        return await this.usersService.createUser(createUserDto);
     }
 
     @Get()
-    findAll(): string {
-        return this.usersService.findAll();
+    async findAll(): Promise<string> {
+        let users = await this.usersService.findAll();
+        return JSON.stringify(users);
     }
 
     @Get(':id')
-    findOne(@Param() params): string {
-        return this.usersService.findOne(params.id);
+    async findOne(@Param() params): Promise<string> {
+        let users = await this.usersService.findOne(params.id);
+        return JSON.stringify(users);
     }
 }
