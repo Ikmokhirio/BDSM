@@ -1,7 +1,19 @@
-import {Body, Controller, Get, HttpCode, Param, Post, Put, UseGuards} from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Get,
+    Request,
+    HttpCode,
+    Param,
+    Post,
+    Put,
+    UnauthorizedException,
+    UseGuards, Delete
+} from '@nestjs/common';
 import {UsersService} from "./users.service";
-import {CreateUserDto} from "./dto/create-user.dto";
 import {AuthGuard} from "@nestjs/passport";
+import {CreateUserDto} from "./dto/create-user.dto";
+import {UpdateUserDto} from "./dto/update-user.dto";
 
 @Controller('users')
 export class UsersController {
@@ -9,21 +21,34 @@ export class UsersController {
     constructor(private readonly usersService: UsersService) {
     }
 
-    @Post()
-    @HttpCode(200)
-    async createUser(@Body() createUserDto: CreateUserDto) {
-        return await this.usersService.createUser(createUserDto);
-    }
-
+    @UseGuards(AuthGuard('jwt'))
     @Get()
-    async findAll(): Promise<string> {
-        let users = await this.usersService.findAll();
-        return JSON.stringify(users);
+    async getCurrentUser(@Request() req) {
+        if (req.user) {
+            return {
+                username: req.user.username,
+                email: req.user.email,
+                avatar: req.user.avatar
+            }
+        }
+        throw new UnauthorizedException();
     }
 
-    @Get(':id')
-    async findOne(@Param() params): Promise<string> {
-        let users = await this.usersService.findOne(params.id);
-        return JSON.stringify(users);
+    @UseGuards(AuthGuard('jwt'))
+    @Delete()
+    async deleteCurrentUser(@Request() req) {
+        if (req.user) {
+            return await this.usersService.deleteUser(req.user.id);
+        }
+        throw new UnauthorizedException();
+    }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Put()
+    async updateCurrentUser(@Request() req, @Body() updateUserDto: UpdateUserDto) {
+        if (req.user) {
+            return await this.usersService.updateCurrentUser(updateUserDto, req.user.id);
+        }
+        throw new UnauthorizedException();
     }
 }

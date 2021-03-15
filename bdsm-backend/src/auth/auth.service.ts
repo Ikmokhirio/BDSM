@@ -2,6 +2,7 @@ import {Injectable} from '@nestjs/common';
 import {UsersService} from "../users/users.service";
 import {Users} from "../users/entities/users.entity";
 import * as jwt from 'jsonwebtoken'
+import {CreateUserDto} from "../users/dto/create-user.dto";
 
 @Injectable()
 export class AuthService {
@@ -17,6 +18,12 @@ export class AuthService {
         }
 
         return null;
+    }
+
+    async registerUser(createUserDto: CreateUserDto) {
+        const user = await this.userService.createUser(createUserDto);
+        return await this.createToken(user);
+
     }
 
     async validateToken(token: any): Promise<any> {
