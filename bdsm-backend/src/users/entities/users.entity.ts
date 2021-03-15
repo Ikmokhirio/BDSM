@@ -1,4 +1,5 @@
-import {Column, Entity, PrimaryGeneratedColumn} from 'typeorm'
+import {BeforeInsert, Column, Entity, PrimaryGeneratedColumn} from 'typeorm'
+import * as bcrypt from 'bcrypt'
 
 @Entity({
     name: "users"
@@ -24,6 +25,14 @@ export class Users {
         nullable: false
     })
     password: string;
+    @BeforeInsert()
+    async hashPassword() {
+        this.password = await bcrypt.hash(this.password,10);
+    }
+
+    async comparePassword(attempt : string) : Promise<Boolean> {
+        return await bcrypt.compare(attempt,this.password);
+    }
 
     @Column({
         nullable: true
