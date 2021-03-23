@@ -4,6 +4,7 @@ import Routes from "./routes";
 
 import {Root} from "./Root";
 import {Login} from "./Login";
+import {Register} from "./Register";
 import {CounterPage} from './Counter';
 import News from './News';
 
@@ -16,6 +17,7 @@ export const Router: React.FC = () => {
           <Route exact path={Routes.LOGIN} component={Login}/>
           <Route exact path={Routes.COUNTER} component={CounterPage}/>
           <Route exact path={Routes.NEWS} component={News}/>
+          <Route exact path={Routes.REGISTER} component={Register}/>
         </Switch>
       </React.Suspense>
     </BrowserRouter>
