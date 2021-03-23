@@ -22,6 +22,9 @@ export class AuthService {
 
     async registerUser(createUserDto: CreateUserDto) {
         const user = await this.userService.createUser(createUserDto);
+        if(!user) {
+            return undefined;
+        }
         return await this.createToken(user);
 
     }
@@ -31,8 +34,8 @@ export class AuthService {
     }
 
     async createToken(user: Users) {
+        const statusCode = 200;
         const expiresIn = process.env.TOKEN_EXPIRE_TIME;
-
         const accessToken = jwt.sign({
                 id: user.id,
                 email: user.email
@@ -44,7 +47,8 @@ export class AuthService {
 
         return {
             expiresIn,
-            accessToken
+            accessToken,
+            statusCode
         };
     }
 

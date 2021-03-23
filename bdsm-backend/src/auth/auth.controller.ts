@@ -11,7 +11,11 @@ export class AuthController {
     @Post('registration')
     @HttpCode(200)
     async registration(@Body() createUserDto: CreateUserDto) {
-        return await this.authService.registerUser(createUserDto);
+        const token = await this.authService.registerUser(createUserDto);
+        if (token) {
+            return token;
+        }
+        throw new UnauthorizedException();
     }
 
     @UseGuards(AuthGuard('local'))
