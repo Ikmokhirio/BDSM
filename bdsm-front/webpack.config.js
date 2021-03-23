@@ -87,7 +87,7 @@ const config = {
         proxy: {
             '/api/': {
                 context: () => true,
-                target: 'http://[::1]:8000',
+                target: 'http://[::1]:3000',
                 secure: false,
                 changeOrigin: true,
                 headers: {

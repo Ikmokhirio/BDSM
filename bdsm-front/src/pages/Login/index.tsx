@@ -6,7 +6,7 @@ export const Login: React.FC = () => {
 
   return (
     <div>
-      <NavBar name={'Регистрация'}/>
+      <NavBar name={'Авторизация'}/>
       <LoginForm/>
     </div>
   );
