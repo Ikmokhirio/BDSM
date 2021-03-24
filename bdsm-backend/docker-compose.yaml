@@ -6,7 +6,7 @@ services:
     build: ./docker/postgres
     image: postgresdb
     ports:
-      - '127.0.0.1:5432:5432'
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
     networks:
       dev:
         aliases:
@@ -14,7 +14,7 @@ services:
     env_file:
       - .env
     volumes:
-      - ./docker-data/postgres/data:/var/lib/postresql/data
+      - ./docker-data/postgres/data:/var/lib/postgresql/data
     environment:
       PGDATA: /var/lib/postgresql/dat
     restart: always
@@ -29,12 +29,13 @@ services:
           - ${APP_ALIAS}
     volumes:
       - .:/app
+      - /app/node_modules
     env_file:
       - .env
     depends_on:
       - postgres
     ports:
-     - 3000:3000
+     - ${PORT}:${PORT}
     command: yarn start:dev
     restart: always
 networks:
