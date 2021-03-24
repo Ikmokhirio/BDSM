@@ -106,3 +106,4 @@ dist
 
 bdsm-frontend/.idea/
 .idea/
+bdsm-backend/docker-data/
