@@ -5,7 +5,6 @@ export class CreateMailDto {
     @IsNotEmpty()
     body: string;
 
-    @IsNotEmpty()
     attachments: string;
 
 }
