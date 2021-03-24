@@ -1,5 +1,4 @@
-import {BeforeInsert, Column, Entity, PrimaryGeneratedColumn, ManyToOne} from 'typeorm'
-import * as bcrypt from 'bcrypt'
+import {Column, Entity, PrimaryGeneratedColumn, ManyToOne} from 'typeorm'
 import {Users} from "../../users/entities/users.entity";
 
 @Entity({
