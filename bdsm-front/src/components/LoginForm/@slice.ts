@@ -13,9 +13,10 @@ export interface LoginFormState {
 }
 export interface Response {
   type: string;
-  message: {
-    token: string;
-  }
+  statusCode: number;
+  message: string;
+  accessToken: string;
+  expiresIn: string;
 }
 // Define the initial state using that type
 const initialState: LoginFormState = {
@@ -55,7 +56,10 @@ export const loginFormSlice = createSlice({
       state.loading = 'succeeded';
       state.password = '';
       state.login = '';
-      localStorage.setItem('token', action.payload.message.token);
+      console.log(action.payload.statusCode);
+      if (action.payload.statusCode == 200)
+        localStorage.setItem('token', action.payload.accessToken);
+      // TODO: add 401 validation
     });
   }
 })

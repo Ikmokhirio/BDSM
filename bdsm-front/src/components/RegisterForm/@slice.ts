@@ -15,9 +15,10 @@ export interface RegisterFormState {
 }
 export interface Response {
   type: string;
-  message: {
-    token: string;
-  }
+  statusCode: number;
+  message: string;
+  accessToken: string;
+  expiresIn: string;
 }
 // Define the initial state using that type
 const initialState: RegisterFormState = {
@@ -35,7 +36,6 @@ export const registerUser = createAsyncThunk(
       method: 'POST',
     };
     const response = await fetchData('/api/auth/registration', postOptions);
-    console.log(response);
     return await (response.json()) as Response;
   })
 
@@ -63,7 +63,10 @@ export const registerFormSlice = createSlice({
       state.password = '';
       state.login = '';
       state.email = '';
-      localStorage.setItem('token', action.payload.message.token);
+      console.log(action.payload.statusCode)
+      if (action.payload.statusCode == 200)
+        localStorage.setItem('token', action.payload.accessToken);
+      // TODO: add 401 validation
     });
   }
 })
