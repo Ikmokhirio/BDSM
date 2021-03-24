@@ -4,7 +4,7 @@ export $(shell sed 's/=.*//' .env)
 dev-server:
 	mkdir -p ./docker-data
 	docker-compose up -d postgres
-	yarn dev
+	yarn start:dev
 
 undo-migrations:
 	mkdir -p ./docker-data
