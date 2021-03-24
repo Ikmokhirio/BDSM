@@ -14,13 +14,28 @@ export class MailsService {
         private usersService: UsersService) {
     }
 
-    async createNewMail(createMailDto: CreateMailDto, user: Users) {
+    async createNewMail(createMailDto: CreateMailDto, user: Users): Promise<Mails> {
         try {
             const mail = new Mails();
+            const usr = await this.usersService.findByUsername(user.username);
             mail.body = createMailDto.body;
             mail.attachments = createMailDto.attachments;
-            mail.user = await this.usersService.findByUsername(user.username);
+            mail.user = usr;
             return await this.mailsRepository.save(mail);
+        } catch (e) {
+            console.error(e);
+            throw new UnauthorizedException();
+        }
+    }
+
+    async getAllMails(user: Users): Promise<Mails[]> {
+        try {
+            return await this.mailsRepository.find({
+                relations: ["user"],
+                where: {
+                    id: user.id
+                }
+            });
         } catch (e) {
             console.error(e);
             throw new UnauthorizedException();

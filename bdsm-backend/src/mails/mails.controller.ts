@@ -19,4 +19,15 @@ export class MailsController {
         }
         throw new UnauthorizedException();
     }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Get()
+    async getAllMails(@Request() req) {
+        if(req.user){
+            return(
+                this.mailsService.getAllMails(req.user)
+            )
+        }
+        throw new UnauthorizedException();
+    }
 }
