@@ -1,5 +1,6 @@
-import {BeforeInsert, Column, Entity, PrimaryGeneratedColumn} from 'typeorm'
+import {BeforeInsert, Column, Entity, OneToMany, PrimaryGeneratedColumn} from 'typeorm'
 import * as bcrypt from 'bcrypt'
+import {Mails} from "../../mails/entities/mails.entity";
 
 @Entity({
     name: "users"
@@ -38,4 +39,7 @@ export class Users {
         nullable: true
     })
     avatar: string
+
+    @OneToMany(()=> Mails, mails => mails.user)
+    mails: Mails[];
 }
