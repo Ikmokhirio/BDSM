@@ -2,27 +2,18 @@ enum Routes {
   ROOT = '/',
   LOGIN = '/login',
   REGISTER = '/register',
-  COUNTER = '/counter',
-  USERS = '/users',
-  CHALLENGES = '/challenges',
-  ERROR = '/error',
-  NEWS = '/news'
+  PROFILE = '/profile',
+  MAIL = '/mail',
+  GROUPS = '/groups'
 }
 
 export enum RoutesNames {
-  ROOT = 'ROOT',
+  ROOT = 'Info',
   LOGIN = 'Login',
   REGISTER = 'Register',
-  COUNTER = 'COUNTER',
-  USERS = 'USERS',
-  CHALLENGES = 'CHALLENGES',
-  ERROR = 'ERROR',
-  NEWS = 'NEWS'
-}
-
-export enum NavBarNames {
-  LOGIN = 'Login',
-  REGISTER = 'Register',
+  PROFILE = 'Profile',
+  MAIL = 'Mail',
+  GROUPS = 'Groups'
 }
 
 export default Routes;

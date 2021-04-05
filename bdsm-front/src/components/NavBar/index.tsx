@@ -2,46 +2,43 @@ import { Link } from 'react-router-dom';
 import * as React from 'react';
 import Routes, { RoutesNames } from '../../pages/routes';
 import Logo from '../../assets/img/logo.png';
+import {AppBar, Button, Typography, Toolbar} from "@material-ui/core";
 
 import s from './NavBar.module.scss';
+import {useStyles} from "../../../style";
 
 interface IProps {
   name: string;
 }
 
 const NavBar: React.FC<IProps> = (props: IProps) => {
+  const classes = useStyles();
   return (
-    <div className={s.root}>
-      <div className={s.grid}>
-        <img className={s.logo} src={Logo} alt="website logo" />
-        <nav className={s.appbar}>
-          <Link className={s.appbarLink} to={Routes.ROOT}>
+      <AppBar position="sticky">
+        <Toolbar className={classes.menu}>
+            <img className={classes.logo} src={Logo} alt="website logo" />
+          <Link  to={Routes.MAIL}>
+            {RoutesNames.MAIL}
+          </Link>
+          <Link  to={Routes.GROUPS}>
+            {RoutesNames.GROUPS}
+          </Link>
+          <Link  to={Routes.PROFILE}>
+            {RoutesNames.PROFILE}
+          </Link>
+          <Link  to={Routes.ROOT}>
             {RoutesNames.ROOT}
           </Link>
-          <Link className={s.appbarLink} to={Routes.USERS}>
-            {RoutesNames.USERS}
-          </Link>
-          <Link className={s.appbarLink} to={Routes.NEWS}>
-            {RoutesNames.NEWS}
-          </Link>
-          <Link className={s.appbarLink} to={Routes.COUNTER}>
-            {RoutesNames.COUNTER}
-          </Link>
-          <Link className={s.appbarLink} to={Routes.CHALLENGES}>
-            {RoutesNames.CHALLENGES}
-          </Link>
-        </nav>
-        <nav className={s.appbar2}>
-          <Link className={s.appbarLink2} to={Routes.LOGIN}>
-            {RoutesNames.LOGIN}
-          </Link>
-          <Link className={s.appbarLink2} to={Routes.REGISTER}>
-            {RoutesNames.REGISTER}
-          </Link>
-        </nav>
-      </div>
-      <h1 className={s.text}>{props.name}</h1>
-    </div>
+              <Link  to={Routes.LOGIN}>
+                {RoutesNames.LOGIN}
+              </Link>
+              <Link  to={Routes.REGISTER}>
+                {RoutesNames.REGISTER}
+              </Link>
+        </Toolbar>
+
+      </AppBar>
+
   );
 };
 
