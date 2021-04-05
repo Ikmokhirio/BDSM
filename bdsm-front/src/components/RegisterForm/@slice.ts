@@ -11,7 +11,8 @@ export interface RegisterFormState {
   email:string;
   login: string;
   password: string;
-  loading: 'idle' | 'pending' | 'succeeded' | 'failed'
+  loading: 'idle' | 'pending' | 'succeeded' | 'failed',
+  error: string
 }
 export interface Response {
   type: string;
@@ -25,7 +26,8 @@ const initialState: RegisterFormState = {
   email:'',
   login: '',
   password: '',
-  loading: 'idle'
+  loading: 'idle',
+  error: ''
 }
 
 export const registerUser = createAsyncThunk(
@@ -52,6 +54,9 @@ export const registerFormSlice = createSlice({
     },
     changePassword: (state, action:PayloadAction<string>) => {
       state.password = action.payload
+    },
+    changeError: (state, action:PayloadAction<string>) => {
+      state.error = action.payload
     }
   },
   extraReducers: builder => {
@@ -66,12 +71,13 @@ export const registerFormSlice = createSlice({
       console.log(action.payload.statusCode)
       if (action.payload.statusCode == 200)
         localStorage.setItem('token', action.payload.accessToken);
-      // TODO: add 401 validation
+      else
+        state.error = '' + action.payload.statusCode + ': ' + action.payload.message;
     });
   }
 })
 
-export const { changeLogin, changePassword, changeEmail } = registerFormSlice.actions;
+export const { changeLogin, changePassword, changeEmail, changeError } = registerFormSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 //export const selectLogin = (state: RootState) => state.loginForm.login;
