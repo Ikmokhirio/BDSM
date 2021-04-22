@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {Form, Input, Button, Checkbox, Row, Col} from 'antd';
 import {UserOutlined, LockOutlined} from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 class LoginPage extends Component<any, any> {
     constructor(props: any) {
@@ -13,7 +14,7 @@ class LoginPage extends Component<any, any> {
 
                 <Row>
                     <Col span={12}>
-                        <img className={"loginImage"} src={'login.png'}/>
+                        <img className={"formImage"} src={'login.png'} alt={"Some cool image"}/>
                     </Col>
 
                     <Col span={6}>
@@ -45,7 +46,7 @@ class LoginPage extends Component<any, any> {
                             </Form.Item>
                             <Form.Item>
 
-                                <a className="login-form-forgot" href="">
+                                <a className="login-form-forgot" href="/">
                                     Забыли пароль?
                                 </a>
                             </Form.Item>
@@ -54,7 +55,7 @@ class LoginPage extends Component<any, any> {
                                 <Button type="primary" htmlType="submit" className="login-form-button">
                                     Войти
                                 </Button>
-                                или <a href="">зарегистрироваться</a>
+                                или <Link to={"/register"}>зарегистрироваться</Link>
                             </Form.Item>
                         </Form>
                     </Col>

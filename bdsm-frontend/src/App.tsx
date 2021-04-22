@@ -2,7 +2,7 @@ import React, {Component, Suspense} from "react"
 import {Route, Switch} from "react-router-dom";
 import PageFooter from "./static/PageFooter";
 import PageHeader from "./static/PageHeader";
-import {Layout, Menu} from "antd";
+import {Layout, Menu, Spin} from "antd";
 import LoginPage from "./Forms/LoginPage";
 import RegistrationPage from "./Forms/RegistrationPage";
 
@@ -19,7 +19,7 @@ class App extends Component<any, any> {
             <div>
                 <PageHeader/>
 
-                <Suspense fallback={<div>Loading</div>}>
+                <Suspense fallback={<Spin />}>
                     <Layout>
                         <Content style={{padding: '0 24px', minHeight: "86vh", display:"flex", flexDirection:"row",justifyContent: "center"}}>
                             <Switch>
