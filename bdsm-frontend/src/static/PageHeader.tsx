@@ -2,6 +2,7 @@ import {Component} from "react";
 import React from "react";
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
+import { Link } from "react-router-dom";
 
 const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -24,8 +25,8 @@ class PageHeader extends Component<any, any> {
                         <Menu.Item key="How">Инструкция</Menu.Item>
                     </Menu>
                     <Menu style={{float: 'right'}} theme="dark" mode="horizontal">
-                        <Menu.Item key="Login">Войти</Menu.Item>
-                        <Menu.Item key="Registration">Регистрация</Menu.Item>
+                        <Menu.Item key="Login"><Link to={"/login"}>Войти</Link></Menu.Item>
+                        <Menu.Item key="Registration"><Link to={"/register"}>Регистрация</Link></Menu.Item>
                     </Menu>
                 </Header>
 
