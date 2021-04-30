@@ -6,7 +6,7 @@ import {CreateMailDto} from "./dto/create-mail.dto";
 @Controller('/api/mails')
 export class MailsController {
     constructor(private readonly mailsService: MailsService) {
-    }
+    }   
 
     @UseGuards(AuthGuard('jwt'))
     @Post()
