@@ -1,4 +1,4 @@
-import React, {Component, Suspense} from "react"
+import React, {Component, Suspense, useEffect} from "react"
 import {Route, Switch} from "react-router-dom";
 import PageFooter from "./static/PageFooter";
 import PageHeader from "./static/PageHeader";
@@ -7,6 +7,8 @@ import LoginPage from "./Forms/LoginPage";
 import RegistrationPage from "./Forms/RegistrationPage";
 
 import {useTypedSelector} from "./hooks/useTypedSelector";
+import {useDispatch} from "react-redux";
+import {fetchUser, loginUser, registerUser} from "./store/action-creator/user";
 
 const {SubMenu} = Menu;
 const {Header, Content, Footer, Sider} = Layout;
@@ -14,6 +16,22 @@ const {Header, Content, Footer, Sider} = Layout;
 
 const App: React.FC<any> = () => {
 
+    const {loading, error, user} = useTypedSelector(state => state.user);
+    // const dispatch = useDispatch();
+    // // useEffect(() => {
+    // //     dispatch(loginUser({
+    // //         username: "Test",
+    // //         password: "Test"
+    // //     }));
+    // // }, [])
+    //
+    // useEffect(() =>{
+    //     dispatch(fetchUser());
+    // },[])
+
+    if (loading) {
+        return <Spin/>
+    }
     return (
         <div>
             <PageHeader/>

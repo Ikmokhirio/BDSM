@@ -1,4 +1,4 @@
-enum UserActionTypes {
+export enum UserActionTypes {
     FETCH_USER = "FETCH_USER",
     FETCH_USER_SUCCESS = "FETCH_USER_SUCCESS",
     FETCH_USER_ERROR = "FETCH_USER_ERROR"
@@ -14,12 +14,12 @@ interface UserState {
 
 interface FetchUserAction {
     type: UserActionTypes.FETCH_USER;
-    payload: any; // TODO : change to user type
+    payload: null;
 }
 
 interface FetchUserSuccessAction {
     type: UserActionTypes.FETCH_USER_SUCCESS;
-    payload: string;
+    payload: any; // TODO : change to user type
 }
 
 interface FetchUserErrorAction {
@@ -27,7 +27,28 @@ interface FetchUserErrorAction {
     payload: string;
 }
 
-type UserAction = FetchUserAction | FetchUserSuccessAction | FetchUserErrorAction;
+export type token = { // Token information from backend
+    expiresIn: number,
+    accessToken : string
+}
+
+// LOGIN
+export type loginUserInformation = { // TODO : MOVE TYPE TO SEPARATE DIR
+    username: string
+    password: string
+}
+
+// REGISTER
+export type registerUserInformation = { // TODO : MOVE TYPE TO SEPARATE DIR
+    username: string
+    email: string
+    password: string
+}
+
+type UserAction =
+    FetchUserAction
+    | FetchUserSuccessAction
+    | FetchUserErrorAction;
 
 const initialState: UserState = {
     user: {
