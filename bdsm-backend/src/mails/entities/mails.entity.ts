@@ -1,5 +1,6 @@
-import {Column, Entity, PrimaryGeneratedColumn, ManyToOne} from 'typeorm'
+import {Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToOne} from 'typeorm'
 import {Users} from "../../users/entities/users.entity";
+import {Tasks} from "../../tasks/entities/tasks.entity";
 
 @Entity({
     name: "mails"
@@ -11,6 +12,9 @@ export class Mails {
 
     @ManyToOne(() => Users, user => user.mails)
     user: Users
+
+    @OneToOne(() => Tasks, task => task.mail)
+    task: Tasks
 
     @Column()
     body: string

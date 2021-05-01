@@ -9,7 +9,7 @@ export class Targets {
     @PrimaryGeneratedColumn()
     id: string;
 
-    @OneToMany(() => Groups, groups => groups.name)
+    @OneToMany(() => Groups, groups => groups.target)
     groups: Groups[];
 
 

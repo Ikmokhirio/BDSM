@@ -8,6 +8,9 @@ import {AuthController} from "./auth/auth.controller";
 import { MailsModule } from './mails/mails.module';
 import { TargetsModule } from './targets/targets.module';
 import { GroupsModule } from './groups/groups.module';
+import { TasksService } from './tasks/tasks.service';
+import { TasksController } from './tasks/tasks.controller';
+import { TasksModule } from './tasks/tasks.module';
 
 @Module({
     imports: [
@@ -16,10 +19,11 @@ import { GroupsModule } from './groups/groups.module';
         AuthModule,
         MailsModule,
         TargetsModule,
-        GroupsModule
+        GroupsModule,
+        TasksModule
     ],
-    controllers: [AppController],
-    providers: [AppService],
+    controllers: [AppController, TasksController],
+    providers: [AppService, TasksService],
 })
 export class AppModule {
 }
