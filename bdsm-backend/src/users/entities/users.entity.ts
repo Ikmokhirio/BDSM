@@ -1,6 +1,7 @@
 import {BeforeInsert, Column, Entity, OneToMany, PrimaryGeneratedColumn} from 'typeorm'
 import * as bcrypt from 'bcrypt'
 import {Mails} from "../../mails/entities/mails.entity";
+import {Groups} from "../../groups/entities/groups.entity";
 
 @Entity({
     name: "users"
@@ -42,4 +43,7 @@ export class Users {
 
     @OneToMany(()=> Mails, mails => mails.user)
     mails: Mails[];
+
+    @OneToMany(()=> Groups, groups => groups.user)
+    groups: Groups[];
 }
