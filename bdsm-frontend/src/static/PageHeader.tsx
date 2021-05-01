@@ -53,7 +53,8 @@ const PageHeader = () => {
                         <Menu.Item key="How">Инструкция</Menu.Item>
                     </Menu>
                     <Menu style={{float: 'right'}} theme="dark" mode="horizontal">
-                        <Menu.Item key="Username" onClick={handleClick}>Привет, {state.username}</Menu.Item>
+                        <Menu.Item key="Username"><Link to={"/user"}>Привет, {state.username}</Link></Menu.Item>
+                        <Menu.Item key="Logout" onClick={handleClick}>Выйти</Menu.Item>
                     </Menu>
                 </Header>
 
