@@ -16,18 +16,11 @@ const {Header, Content, Footer, Sider} = Layout;
 
 const App: React.FC<any> = () => {
 
-    const {loading, error, user} = useTypedSelector(state => state.user);
-    // const dispatch = useDispatch();
-    // // useEffect(() => {
-    // //     dispatch(loginUser({
-    // //         username: "Test",
-    // //         password: "Test"
-    // //     }));
-    // // }, [])
-    //
-    // useEffect(() =>{
-    //     dispatch(fetchUser());
-    // },[])
+    const {loading, error, userData} = useTypedSelector(state => state.user);
+    const dispatch = useDispatch();
+    useEffect(() =>{
+        dispatch(fetchUser());
+    },[])
 
     if (loading) {
         return <Spin/>

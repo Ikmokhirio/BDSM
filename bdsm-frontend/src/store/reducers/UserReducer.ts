@@ -4,9 +4,14 @@ export enum UserActionTypes {
     FETCH_USER_ERROR = "FETCH_USER_ERROR"
 }
 
+export type userData = {
+    username: null | string,
+    email: null | string,
+    avatar: null | string
+}
 
 interface UserState {
-    user: any; // TODO : change to user type
+    userData: userData;
     loading: boolean;
     error: null | string;
 }
@@ -29,7 +34,7 @@ interface FetchUserErrorAction {
 
 export type token = { // Token information from backend
     expiresIn: number,
-    accessToken : string
+    accessToken: string
 }
 
 // LOGIN
@@ -51,8 +56,10 @@ type UserAction =
     | FetchUserErrorAction;
 
 const initialState: UserState = {
-    user: {
-        name: "Неизвестный" // TODO : remove magic string | convert to user type
+    userData: {
+        username: null,
+        avatar: null,
+        email: null
     },
     loading: false,
     error: null
@@ -61,11 +68,23 @@ const initialState: UserState = {
 export const userReducer = (state = initialState, action: UserAction): UserState => {
     switch (action.type) {
         case UserActionTypes.FETCH_USER:
-            return {loading: true, error: null, user: null}
+            return {
+                loading: true, error: null, userData: {
+                    username: null,
+                    avatar: null,
+                    email: null
+                }
+            }
         case UserActionTypes.FETCH_USER_SUCCESS:
-            return {loading: false, error: null, user: action.payload};
+            return {loading: false, error: null, userData: action.payload};
         case UserActionTypes.FETCH_USER_ERROR:
-            return {loading: false, error: action.payload, user: null};
+            return {
+                loading: false, error: action.payload, userData: {
+                    username: null,
+                    avatar: null,
+                    email: null
+                }
+            };
         default:
             return state;
     }

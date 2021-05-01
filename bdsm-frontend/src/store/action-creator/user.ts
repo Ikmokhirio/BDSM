@@ -18,8 +18,6 @@ export const fetchUser = () => {
 
             const json = await response.json();
 
-            console.log(json);
-
             if (json.statusCode != "200") { // TODO : change to constant
                 dispatch({
                     type: UserActionTypes.FETCH_USER_ERROR,
@@ -28,7 +26,11 @@ export const fetchUser = () => {
             } else {
                 dispatch({
                     type: UserActionTypes.FETCH_USER_SUCCESS,
-                    payload: json
+                    payload: {
+                        username: json.username,
+                        email: json.email,
+                        avatar: json.avatar
+                    }
                 })
             }
         } catch (e) {
@@ -53,7 +55,6 @@ export const loginUser = (loginInfo: loginUserInformation) => {
 
             const json = await response.json();
 
-            console.log(json);
 
             if (json.statusCode != "200") { // TODO : change to constant
                 dispatch({
@@ -64,7 +65,11 @@ export const loginUser = (loginInfo: loginUserInformation) => {
                 localStorage.setItem("jwt", json.accessToken); // TODO : better approach
                 dispatch({
                     type: UserActionTypes.FETCH_USER_SUCCESS,
-                    payload: json
+                    payload: {
+                        username: json.username,
+                        email: json.email,
+                        avatar: json.avatar
+                    }
                 })
             }
         } catch (e) {
@@ -89,8 +94,6 @@ export const registerUser = (registerInfo: registerUserInformation) => {
 
             const json = await response.json();
 
-            console.log(json);
-
             if (json.statusCode != "200") { // TODO : change to constant
                 dispatch({
                     type: UserActionTypes.FETCH_USER_ERROR,
@@ -100,7 +103,48 @@ export const registerUser = (registerInfo: registerUserInformation) => {
                 localStorage.setItem("jwt", json.accessToken); // TODO : better approach
                 dispatch({
                     type: UserActionTypes.FETCH_USER_SUCCESS,
-                    payload: json
+                    payload: {
+                        username: json.username,
+                        email: json.email,
+                        avatar: json.avatar
+                    }
+                })
+            }
+        } catch (e) {
+            dispatch({type: UserActionTypes.FETCH_USER_ERROR, payload: e.message});
+        }
+    }
+}
+
+export const logoutUser = () => {
+    return async (dispatch: Dispatch) => {
+        try {
+            dispatch({
+                type: UserActionTypes.FETCH_USER
+            });
+            const response = await fetch("api/auth/logout", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json;charset=utf-8"
+                }
+            });
+
+            const json = await response.json();
+
+            if (json.statusCode != "200") { // TODO : change to constant
+                dispatch({
+                    type: UserActionTypes.FETCH_USER_ERROR,
+                    payload: json.message
+                });
+            } else {
+                localStorage.removeItem("jwt");
+                dispatch({
+                    type: UserActionTypes.FETCH_USER_SUCCESS,
+                    payload: {
+                        username: null,
+                        email: null,
+                        avatar: null
+                    }
                 })
             }
         } catch (e) {
