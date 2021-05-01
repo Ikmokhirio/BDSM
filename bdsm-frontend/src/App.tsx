@@ -9,6 +9,7 @@ import RegistrationPage from "./forms/RegistrationPage";
 import {useTypedSelector} from "./hooks/useTypedSelector";
 import {useDispatch} from "react-redux";
 import {fetchUser, loginUser, registerUser} from "./store/action-creator/user";
+import {EmailSender} from "./EmailSender";
 
 const {SubMenu} = Menu;
 const {Header, Content, Footer, Sider} = Layout;
@@ -51,6 +52,9 @@ const App: React.FC<any> = () => {
 
                             </Route>
 
+                            <Route exact path={"/user"}>
+                                <EmailSender/>
+                            </Route>
 
                             <Route exact path={"/Register"}>
 

@@ -1,4 +1,6 @@
 @import '~antd/dist/antd.css';
+@import "~froala-editor/css/froala_style.min.css";
+@import "~froala-editor/css/froala_editor.pkgd.min.css";
 
 .loginPage, .registrationPage {
     margin-top: 10vh;
@@ -26,4 +28,30 @@
 
 .login-form-button, .register-form-button {
     margin-right: 2.5%;
+}
+
+.taskCreator {
+    width: 60vw;
+    padding: 25px;
+    margin: 16px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    text-align: center;
+}
+
+.stepContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-content: center;
+    width: 40vw;
+    min-height: 384px;
+}
+
+.accept_message_button {
+    margin: 16px;
 }
