@@ -1,10 +1,10 @@
 import React, {Component, Suspense, useEffect} from "react"
 import {Route, Switch} from "react-router-dom";
-import PageFooter from "./static/PageFooter";
-import PageHeader from "./static/PageHeader";
+import PageFooter from "./public_blocks/PageFooter";
+import PageHeader from "./public_blocks/PageHeader";
 import {Layout, Menu, Spin} from "antd";
-import LoginPage from "./Forms/LoginPage";
-import RegistrationPage from "./Forms/RegistrationPage";
+import LoginPage from "./forms/LoginPage";
+import RegistrationPage from "./forms/RegistrationPage";
 
 import {useTypedSelector} from "./hooks/useTypedSelector";
 import {useDispatch} from "react-redux";
