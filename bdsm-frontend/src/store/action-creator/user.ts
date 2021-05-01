@@ -117,38 +117,15 @@ export const registerUser = (registerInfo: registerUserInformation) => {
 }
 
 export const logoutUser = () => {
-    return async (dispatch: Dispatch) => {
-        try {
-            dispatch({
-                type: UserActionTypes.FETCH_USER
-            });
-            const response = await fetch("api/auth/logout", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json;charset=utf-8"
-                }
-            });
-
-            const json = await response.json();
-
-            if (json.statusCode != "200") { // TODO : change to constant
-                dispatch({
-                    type: UserActionTypes.FETCH_USER_ERROR,
-                    payload: json.message
-                });
-            } else {
-                localStorage.removeItem("jwt");
-                dispatch({
-                    type: UserActionTypes.FETCH_USER_SUCCESS,
-                    payload: {
-                        username: null,
-                        email: null,
-                        avatar: null
-                    }
-                })
+    localStorage.removeItem("jwt");
+    return (dispatch :Dispatch) => {
+        dispatch({
+            type: UserActionTypes.FETCH_USER_SUCCESS,
+            payload: {
+                username: null,
+                email: null,
+                avatar: null
             }
-        } catch (e) {
-            dispatch({type: UserActionTypes.FETCH_USER_ERROR, payload: e.message});
-        }
+        })
     }
 }

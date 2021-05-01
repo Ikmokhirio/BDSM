@@ -1,4 +1,4 @@
-import {Component, useEffect, useState} from "react";
+import {Component, useEffect, useRef, useState} from "react";
 import React from "react";
 import {Layout, Menu, Breadcrumb} from 'antd';
 import {UserOutlined, LaptopOutlined, NotificationOutlined} from '@ant-design/icons';
@@ -21,13 +21,24 @@ const PageHeader = () => {
     })
     const {userData} = useTypedSelector(state => state.user);
     const {logoutUser} = useActions();
+    const componentIdMounted = useRef(true);
 
     const handleClick = () => {
         logoutUser();
     }
 
+    store.subscribe(() => {
+            if (componentIdMounted.current) {
+                setState(store.getState().user.userData);
+            }
+        }
+    )
+
     useEffect(() => {
         setState(userData);
+        return () => {
+            componentIdMounted.current = false;
+        }
     }, []);
 
 
