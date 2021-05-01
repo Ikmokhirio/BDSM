@@ -13,7 +13,14 @@ export class AuthController {
     async registration(@Body() createUserDto: CreateUserDto) {
         const token = await this.authService.registerUser(createUserDto);
         if (token) {
-            return token;
+            return {
+                username: createUserDto.username,
+                email: createUserDto.email,
+                avatar: createUserDto.avatar,
+                expiresIn: token.expiresIn,
+                accessToken: token.accessToken,
+                statusCode: token.statusCode
+            };
         }
         throw new UnauthorizedException();
     }
@@ -22,8 +29,18 @@ export class AuthController {
     @Post('login')
     @HttpCode(200)
     async login(@Request() req) {
+
         if (req.user) {
-            return await this.authService.createToken(req.user);
+            let token = await this.authService.createToken(req.user);
+
+            return {
+                username: req.user.username,
+                email: req.user.email,
+                avatar: req.user.avatar,
+                expiresIn: token.expiresIn,
+                accessToken: token.accessToken,
+                statusCode: token.statusCode
+            };
         }
         throw new UnauthorizedException();
     }

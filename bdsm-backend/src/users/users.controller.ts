@@ -28,7 +28,8 @@ export class UsersController {
             return {
                 username: req.user.username,
                 email: req.user.email,
-                avatar: req.user.avatar
+                avatar: req.user.avatar,
+                statusCode: 200
             }
         }
         throw new UnauthorizedException();
