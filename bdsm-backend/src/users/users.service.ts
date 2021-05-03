@@ -4,13 +4,15 @@ import {CreateUserDto} from "./dto/create-user.dto";
 import {Users} from "./entities/users.entity";
 import {InjectRepository} from "@nestjs/typeorm";
 import {UpdateUserDto} from "./dto/update-user.dto";
+import {GroupsService} from "../groups/groups.service";
 
 @Injectable()
 export class UsersService {
 
     constructor(
         @InjectRepository(Users)
-        private usersRepository: Repository<Users>) {
+        private usersRepository: Repository<Users>,
+        private groupsService: GroupsService) {
     }
 
     async findAll(): Promise<Users[]> {
@@ -40,7 +42,9 @@ export class UsersService {
     async createUser(createUserDto: CreateUserDto) {
         try {
             const user = await this.usersRepository.create(createUserDto);
-            return await this.usersRepository.save(user);
+            const userInstance = await this.usersRepository.save(user);
+            await this.groupsService.createDefaultUserGroup(userInstance);
+            return userInstance;
         } catch (e) {
             console.error(e);
             return undefined;
