@@ -12,7 +12,7 @@ module.exports = {
         'src/**/entities/*.entity.ts'
     ],
     migrations: [
-        'src/**/entities/migrations/*.ts'
+        'migrations/*.ts'
     ],
     namingStrategy: new SnakeNamingStrategy()
 }

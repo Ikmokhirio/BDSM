@@ -6,7 +6,7 @@ dev-server:
 	docker-compose up -d postgres
 	yarn start:dev
 
-undo-migrations:
+	undo-migrations:
 	mkdir -p ./docker-data
 	docker-compose up -d postgres
 	yarn typeorm migration:revert
