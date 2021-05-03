@@ -12,6 +12,12 @@ export class Users {
     id: string;
 
     @Column({
+        nullable: false,
+        default: "User"
+    })
+    role: string;
+
+    @Column({
         unique: true,
         nullable: false
     })
@@ -27,13 +33,14 @@ export class Users {
         nullable: false
     })
     password: string;
+
     @BeforeInsert()
     async hashPassword() {
-        this.password = await bcrypt.hash(this.password,10);
+        this.password = await bcrypt.hash(this.password, 10);
     }
 
-    async comparePassword(attempt : string) : Promise<Boolean> {
-        return await bcrypt.compare(attempt,this.password);
+    async comparePassword(attempt: string): Promise<Boolean> {
+        return await bcrypt.compare(attempt, this.password);
     }
 
     @Column({
@@ -41,9 +48,9 @@ export class Users {
     })
     avatar: string
 
-    @OneToMany(()=> Mails, mails => mails.user)
+    @OneToMany(() => Mails, mails => mails.user)
     mails: Mails[];
 
-    @OneToMany(()=> Groups, groups => groups.user)
+    @OneToMany(() => Groups, groups => groups.owner)
     groups: Groups[];
 }

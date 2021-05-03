@@ -15,4 +15,7 @@ export class Tasks {
 
     @OneToOne(() => Mails, mail => mail.task)
     mail: Mails
+
+    @Column()
+    finished : boolean
 }

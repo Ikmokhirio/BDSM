@@ -18,7 +18,7 @@ export class Groups {
     task: Tasks
 
     @ManyToOne(() => Users, user => user.groups)
-    user: Users
+    owner: Users
 
     @Column()
     name: string
