@@ -12,11 +12,11 @@ export class GroupsService {
     ) {
     }
 
-    async createDefaultUserGroup(user : Users) : Promise<Groups> {
-        return this.groupsRepository.create({
+    async createDefaultUserGroup(user: Users): Promise<Groups> {
+        return await this.groupsRepository.save(await this.groupsRepository.create({
             owner: user,
             name: user.username // Create new group by user username
-        });
+        }));
     }
 
 }

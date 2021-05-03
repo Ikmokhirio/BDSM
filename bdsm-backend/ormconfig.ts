@@ -1,5 +1,3 @@
-const {SnakeNamingStrategy} = require("typeorm-naming-strategies");
-
 module.exports = {
     type: 'postgres',
     host: (process.env.docker === 'TRUE' ? process.env.DB_ALIAS : process.env.POSTGRES_HOST),
@@ -13,6 +11,5 @@ module.exports = {
     ],
     migrations: [
         'migrations/*.ts'
-    ],
-    namingStrategy: new SnakeNamingStrategy()
+    ]
 }

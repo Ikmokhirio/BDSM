@@ -1,4 +1,4 @@
-import {BeforeInsert, Column, Entity, OneToMany, PrimaryGeneratedColumn} from 'typeorm'
+import {BeforeInsert, Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn} from 'typeorm'
 import * as bcrypt from 'bcrypt'
 import {Mails} from "../../mails/entities/mails.entity";
 import {Groups} from "../../groups/entities/groups.entity";
@@ -52,5 +52,6 @@ export class Users {
     mails: Mails[];
 
     @OneToMany(() => Groups, groups => groups.owner)
+    @JoinColumn()
     groups: Groups[];
 }

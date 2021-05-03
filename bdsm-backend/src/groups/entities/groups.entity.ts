@@ -1,4 +1,4 @@
-import {Column, Entity, PrimaryGeneratedColumn, ManyToOne} from 'typeorm'
+import {Column, Entity, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinColumn, JoinTable} from 'typeorm'
 import {Targets} from "../../targets/entities/targets.entity";
 import {Tasks} from "../../tasks/entities/tasks.entity";
 import {Users} from "../../users/entities/users.entity";
@@ -11,13 +11,14 @@ export class Groups {
     @PrimaryGeneratedColumn()
     id: string;
 
-    @ManyToOne(() => Targets, target => target.groups)
-    target: Targets
+    @ManyToMany(() => Targets, targets => targets.groups)
+    targets: Targets[]
 
     @ManyToOne(() => Tasks, task => task.groups)
+    @JoinColumn()
     task: Tasks
 
-    @ManyToOne(() => Users, user => user.groups)
+    @ManyToOne(() => Users, owner => owner.groups)
     owner: Users
 
     @Column()

@@ -1,4 +1,4 @@
-import {Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany} from 'typeorm'
+import {Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany, ManyToMany, JoinTable} from 'typeorm'
 import {Groups} from "../../groups/entities/groups.entity";
 
 @Entity({
@@ -9,9 +9,9 @@ export class Targets {
     @PrimaryGeneratedColumn()
     id: string;
 
-    @OneToMany(() => Groups, groups => groups.target)
+    @ManyToMany(() => Groups, groups => groups.targets)
+    @JoinTable()
     groups: Groups[];
-
 
     @Column()
     email: string

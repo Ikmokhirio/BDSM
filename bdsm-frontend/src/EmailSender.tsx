@@ -1,7 +1,7 @@
 import React, {useState, useRef} from 'react';
 
-import {Button, Form, Row, Steps} from "antd"
-import {UserOutlined, LoadingOutlined, EditOutlined} from '@ant-design/icons';
+import {Button, Form, message, Row, Steps, Upload} from "antd"
+import {UserOutlined, LoadingOutlined, EditOutlined, UploadOutlined} from '@ant-design/icons';
 
 const {Step} = Steps;
 
@@ -17,6 +17,24 @@ export const EmailSender = ({}) => {
 
     const sendMessage = (event: any) => {
         event.preventDefault(); // TODO : prepare mail
+    }
+
+    const props = {
+        name: 'targets',
+        action: 'api/targets',
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem("jwt")
+        },
+        onChange(info: any) {
+            if (info.file.status !== 'uploading') {
+                console.log(info.file, info.fileList);
+            }
+            if (info.file.status === 'done') {
+                message.success(`${info.file.name} загружен`);
+            } else if (info.file.status === 'error') {
+                message.success(`${info.file.name} ошибка`);
+            }
+        }
     }
 
     const steps = [
@@ -44,6 +62,9 @@ export const EmailSender = ({}) => {
             title: "Выберите цели",
             content: (
                 <div className={"stepContent"}>
+                    <Upload {...props}>
+                        <Button icon={<UploadOutlined/>}>Заггрузить файл с целями</Button>
+                    </Upload>
                 </div>
             ),
             description: "Выберите цели для рассылки писем",
