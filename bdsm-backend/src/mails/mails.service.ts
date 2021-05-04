@@ -19,7 +19,6 @@ export class MailsService {
             const mail = new Mails();
             const usr = await this.usersService.findByUsername(user.username);
             mail.body = createMailDto.body;
-            mail.attachments = createMailDto.attachments;
             mail.user = usr;
             return await this.mailsRepository.save(mail);
         } catch (e) {

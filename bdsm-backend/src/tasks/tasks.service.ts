@@ -28,6 +28,7 @@ export class TasksService {
                     id: user.id
                 }
             })
+            console.log(userInstance);
 
             const mail = await this.mailsRepository.save(
                 await this.mailsRepository.create({
@@ -35,22 +36,25 @@ export class TasksService {
                     body: createTaskDto.body
                 })
             );
+            console.log(mail);
 
             const findedGroups = await this.groupsRepository.findByIds(createTaskDto.groupsIds);
-
+            console.log(findedGroups);
             if (!findedGroups) {
                 return undefined;
             }
 
-            const task = await this.tasksRepository.save(
-                await this.tasksRepository.create({
-                    mail: mail,
-                    finished: false,
-                    currentIndex: 0,
-                    status: "Ready",
-                    groups: findedGroups
-                })
-            );
+            const tempTask = await this.tasksRepository.create({
+                mail: mail,
+                finished: false,
+                currentIndex: 0,
+                status: "Ready",
+                groups: findedGroups
+            });
+
+            console.log(tempTask)
+
+            const task = await this.tasksRepository.save(tempTask);
 
             return task;
 

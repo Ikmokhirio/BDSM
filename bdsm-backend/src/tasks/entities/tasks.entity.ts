@@ -1,4 +1,4 @@
-import {Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany, OneToOne} from 'typeorm'
+import {Column, Entity, PrimaryGeneratedColumn, ManyToOne, OneToMany, OneToOne, JoinColumn} from 'typeorm'
 import {Groups} from "../../groups/entities/groups.entity";
 import {Mails} from "../../mails/entities/mails.entity";
 
@@ -11,9 +11,11 @@ export class Tasks {
     id: string;
 
     @OneToMany(() => Groups, groups => groups.task)
+    @JoinColumn()
     groups: Groups[];
 
     @OneToOne(() => Mails, mail => mail.task)
+    @JoinColumn()
     mail: Mails
 
     @Column()
