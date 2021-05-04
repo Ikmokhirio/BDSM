@@ -11,6 +11,7 @@ import { GroupsModule } from './groups/groups.module';
 import { TasksService } from './tasks/tasks.service';
 import { TasksController } from './tasks/tasks.controller';
 import { TasksModule } from './tasks/tasks.module';
+import { MailerModule } from './mailer/mailer.module';
 
 @Module({
     imports: [
@@ -20,7 +21,8 @@ import { TasksModule } from './tasks/tasks.module';
         MailsModule,
         TargetsModule,
         GroupsModule,
-        TasksModule
+        TasksModule,
+        MailerModule
     ],
     controllers: [AppController, TasksController],
     providers: [AppService, TasksService],
