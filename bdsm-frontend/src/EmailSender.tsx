@@ -9,16 +9,24 @@ const {Step} = Steps;
 
 import FroalaEditor from "react-froala-wysiwyg";
 import FroalaEditorImg from "react-froala-wysiwyg/FroalaEditorImg";
-import './langs/ru.js'; // Russia localization for text editor
+import './langs/ru.js';
+import {useMessage} from "./hooks/useActions"; // Russia localization for text editor
 
 export const EmailSender = ({}) => {
 
+    const {sendMessage} = useMessage();
     const [state, setState] = useState({
         content: null
     })
 
-    const sendMessage = (event: any) => {
+    const send = (event: any) => {
         event.preventDefault(); // TODO : prepare mail
+        sendMessage({
+            body: state.content,
+            username: "test",
+            password: "1234",
+            groupsIds: [1, 2, 3]
+        });
     }
 
     const props = {
@@ -112,7 +120,7 @@ export const EmailSender = ({}) => {
 
             {
                 current === steps.length - 1 && (
-                    <Button type="primary" htmlType="submit" className="accept_message_button" onClick={sendMessage}>
+                    <Button type="primary" htmlType="submit" className="accept_message_button" onClick={send}>
                         Готово
                     </Button>
                 )

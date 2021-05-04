@@ -1,3 +1,5 @@
+import {message} from "antd";
+
 export enum UserActionTypes {
     FETCH_USER = "FETCH_USER",
     FETCH_USER_SUCCESS = "FETCH_USER_SUCCESS",
@@ -68,6 +70,7 @@ const initialState: UserState = {
 export const userReducer = (state = initialState, action: UserAction): UserState => {
     switch (action.type) {
         case UserActionTypes.FETCH_USER:
+            message.success("Авторизация...");
             return {
                 loading: true, error: null, userData: {
                     username: null,
@@ -76,8 +79,10 @@ export const userReducer = (state = initialState, action: UserAction): UserState
                 }
             }
         case UserActionTypes.FETCH_USER_SUCCESS:
+            message.success("Успешно!");
             return {loading: false, error: null, userData: action.payload};
         case UserActionTypes.FETCH_USER_ERROR:
+            message.error(`Произошла ошбика ${action.payload}`);
             return {
                 loading: false, error: action.payload, userData: {
                     username: null,
