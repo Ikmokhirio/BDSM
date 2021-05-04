@@ -32,6 +32,7 @@
 
 .taskCreator {
     width: 60vw;
+    height: 512px;
     padding: 25px;
     margin: 16px;
 
@@ -49,7 +50,17 @@
     justify-content: flex-start;
     align-content: center;
     width: 40vw;
+}
+
+.targetDragger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
     min-height: 384px;
+    width: 40vw;
+    margin: 16px;
 }
 
 .accept_message_button {

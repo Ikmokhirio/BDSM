@@ -1,7 +1,9 @@
 import React, {useState, useRef} from 'react';
 
 import {Button, Form, message, Row, Steps, Upload} from "antd"
-import {UserOutlined, LoadingOutlined, EditOutlined, UploadOutlined} from '@ant-design/icons';
+import {UserOutlined, LoadingOutlined, EditOutlined, UploadOutlined, InboxOutlined} from '@ant-design/icons';
+
+const {Dragger} = Upload;
 
 const {Step} = Steps;
 
@@ -62,9 +64,14 @@ export const EmailSender = ({}) => {
             title: "Выберите цели",
             content: (
                 <div className={"stepContent"}>
-                    <Upload {...props}>
-                        <Button icon={<UploadOutlined/>}>Заггрузить файл с целями</Button>
-                    </Upload>
+                    <Dragger {...props} className={"targetDragger"}>
+                        <p className={"ant-upload-drag-icon"}>
+                            <InboxOutlined/>
+                        </p>
+                        <p>
+                            Нажмите или перетащите файл, содержаший цели для рассылки
+                        </p>
+                    </Dragger>
                 </div>
             ),
             description: "Выберите цели для рассылки писем",
@@ -95,7 +102,7 @@ export const EmailSender = ({}) => {
     return (
         <div className="taskCreator">
 
-            <Steps current={current}>
+            <Steps current={current} type="navigation">
                 {steps.map(item => (
                     <Step key={item.title} title={item.title} description={item.description} icon={item.icon}/>
                 ))}
