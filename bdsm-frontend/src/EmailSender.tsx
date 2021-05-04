@@ -1,6 +1,6 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 
-import {Button, Form, message, Row, Steps, Upload} from "antd"
+import {Button, Checkbox, Form, message, Row, Steps, Upload} from "antd"
 import {UserOutlined, LoadingOutlined, EditOutlined, UploadOutlined, InboxOutlined} from '@ant-design/icons';
 
 const {Dragger} = Upload;
@@ -9,17 +9,44 @@ const {Step} = Steps;
 
 import FroalaEditor from "react-froala-wysiwyg";
 import FroalaEditorImg from "react-froala-wysiwyg/FroalaEditorImg";
-import './langs/ru.js';
-import {useMessage} from "./hooks/useActions"; // Russia localization for text editor
+import './langs/ru.js'; // Russia localization for text editor
+import {useMessage} from "./hooks/useActions";
+import {useTypedSelector} from "./hooks/useTypedSelector";
+import {store} from "./store";
+import {groupInfo} from "./store/reducers/MessageReducer";
 
 export const EmailSender = ({}) => {
 
-    const {sendMessage} = useMessage();
-    const [state, setState] = useState({
-        content: null
+    const {sendMessage, getGroups} = useMessage();
+    const [state, setState] = useState<{
+        groups: null | groupInfo[],
+        content: null | string
+    }>({
+        content: null,
+        groups: []
     })
+    const {groups, loading} = useTypedSelector(state => state.message);
+    const componentIdMounted = useRef(true);
+
+    useEffect(() => {
+        getGroups();
+        return () => {
+            componentIdMounted.current = false;
+        }
+    }, []);
+
+    store.subscribe(() => {
+            if (componentIdMounted.current) {
+                setState({
+                    content: state.content,
+                    groups: store.getState().message.groups
+                });
+            }
+        }
+    )
 
     const send = (event: any) => {
+        console.log("SENDING");
         event.preventDefault(); // TODO : prepare mail
         sendMessage({
             body: state.content,
@@ -37,7 +64,6 @@ export const EmailSender = ({}) => {
         },
         onChange(info: any) {
             if (info.file.status !== 'uploading') {
-                console.log(info.file, info.fileList);
             }
             if (info.file.status === 'done') {
                 message.success(`${info.file.name} загружен`);
@@ -61,7 +87,7 @@ export const EmailSender = ({}) => {
                                       }
                                   }
                                   onModelChange={(model: any) => {
-                                      setState({content: model})
+                                      setState({content: model, groups: state.groups})
                                   }}/>
                 </div>
             ),
@@ -89,7 +115,11 @@ export const EmailSender = ({}) => {
             title: "Ожидайте",
             content: (
                 <div className={"stepContent"}>
-
+                    {
+                        state.groups ? state.groups.map((group: any) => {
+                            return (<Checkbox key={group.id}>{group.name}</Checkbox>); // TODO : ID select
+                        }) : <div/>
+                    }
                 </div>
             ),
             description: "Ожидайте завершения рассылки",

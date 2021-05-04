@@ -19,4 +19,15 @@ export class GroupsService {
         }));
     }
 
+    async getAllUserGroups(user: Users): Promise<any> {
+        return await this.groupsRepository.find(
+            {
+                where: {
+                    owner: {
+                        id: user.id
+                    }
+                }
+            }
+        )
+    }
 }

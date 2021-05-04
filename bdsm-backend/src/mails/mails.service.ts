@@ -32,7 +32,9 @@ export class MailsService {
             return await this.mailsRepository.find({
                 relations: ["user"],
                 where: {
-                    id: user.id
+                    user: {
+                        id: user.id
+                    }
                 }
             });
         } catch (e) {
