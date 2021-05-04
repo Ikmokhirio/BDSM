@@ -16,21 +16,41 @@ export class TargetsService {
     }
 
     async createTarget(email: string, user: Users): Promise<Targets> {
-        const newTarget = this.targetsRepository.create({
-            email: email,
-            groups: [await this.groupsRepository.findOne({
-                relations: ["owner"],
+
+        let target: Targets = await this.targetsRepository.findOne(
+            {
+                relations: ["groups"],
                 where: {
-                    owner: {
-                        id: user.id
-                    }
+                    email: email
                 }
-            })]
+            }
+        )
+
+        let group: Groups = await this.groupsRepository.findOne({ // Find group, corresponding to this owner
+            relations: ["owner"],
+            where: {
+                owner: {
+                    id: user.id
+                }
+            }
         })
-        console.log(newTarget); // TODO : data check
-        // newTarget.groups.push(defaultGroup);
-        let newShit = await this.targetsRepository.save(newTarget);
-        return newShit;
+
+        if (!target) { // If no such email in database => add it
+            const newTarget = this.targetsRepository.create({
+                email: email,
+                groups: [group]
+            })
+            return await this.targetsRepository.save(newTarget);
+        }
+
+        if (target.groups) { // If email is present => add new group to it's groups list
+            target.groups.push(group);
+        } else {
+            target.groups = [group];
+        }
+
+        return (await this.targetsRepository.save(target));
+
     }
 
 }
