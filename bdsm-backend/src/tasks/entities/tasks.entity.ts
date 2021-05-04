@@ -17,5 +17,14 @@ export class Tasks {
     mail: Mails
 
     @Column()
-    finished : boolean
+    finished: boolean
+
+    @Column()
+    currentIndex: number
+
+    @Column({
+        default: "Stopped"
+    })
+    status: string
+
 }

@@ -4,6 +4,7 @@ import {Repository} from "typeorm";
 import {Targets} from "./entities/targets.entity";
 import {Users} from "../users/entities/users.entity";
 import {Groups} from "../groups/entities/groups.entity";
+import {MailerService} from "../mailer/mailer.service";
 
 @Injectable()
 export class TargetsService {
@@ -11,7 +12,8 @@ export class TargetsService {
     constructor(@InjectRepository(Targets)
                 private targetsRepository: Repository<Targets>,
                 @InjectRepository(Groups)
-                private groupsRepository: Repository<Groups>
+                private groupsRepository: Repository<Groups>,
+                private mailerService: MailerService
     ) {
     }
 
