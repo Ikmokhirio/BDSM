@@ -6,28 +6,18 @@ import {CreateMailDto} from "./dto/create-mail.dto";
 @Controller('/api/mails')
 export class MailsController {
     constructor(private readonly mailsService: MailsService) {
-    }   
+    }
 
     @UseGuards(AuthGuard('jwt'))
     @Post()
     @HttpCode(200)
     async createNewMail(@Request() req, @Body() createMailDto: CreateMailDto) {
-        if (req.user) {
-            return(
-                this.mailsService.createNewMail(createMailDto,req.user)
-            )
-        }
-        throw new UnauthorizedException();
+        return await this.mailsService.createNewMail(createMailDto, req.user);
     }
 
     @UseGuards(AuthGuard('jwt'))
     @Get()
     async getAllMails(@Request() req) {
-        if(req.user){
-            return(
-                this.mailsService.getAllMails(req.user)
-            )
-        }
-        throw new UnauthorizedException();
+        return (await this.mailsService.getAllMails(req.user));
     }
 }

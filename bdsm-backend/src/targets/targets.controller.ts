@@ -15,7 +15,7 @@ export class TargetsController {
     @UseGuards(AuthGuard('jwt'))
     @Post()
     @UseInterceptors(FileInterceptor('targets', multerOptions))
-    async uploadTargets(@UploadedFile() file: Express.Multer.File,@Request() req) {
+    async uploadTargets(@UploadedFile() file: Express.Multer.File,@Request() req) { // TODO : remove this shit
         let data = file.buffer.toString('utf-8');
         const arr = CSV.parse(data);
         for(let i = 0; i < arr.length; i++) {

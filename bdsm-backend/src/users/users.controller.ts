@@ -24,32 +24,23 @@ export class UsersController {
     @UseGuards(AuthGuard('jwt'))
     @Get()
     async getCurrentUser(@Request() req) {
-        if (req.user) {
-            return {
-                username: req.user.username,
-                email: req.user.email,
-                avatar: req.user.avatar,
-                statusCode: 200
-            }
+        return {
+            username: req.user.username,
+            email: req.user.email,
+            avatar: req.user.avatar,
+            statusCode: 200
         }
-        throw new UnauthorizedException();
     }
 
     @UseGuards(AuthGuard('jwt'))
     @Delete()
     async deleteCurrentUser(@Request() req) {
-        if (req.user) {
-            return await this.usersService.deleteUser(req.user.id);
-        }
-        throw new UnauthorizedException();
+        return await this.usersService.deleteUser(req.user.id);
     }
 
     @UseGuards(AuthGuard('jwt'))
     @Put()
     async updateCurrentUser(@Request() req, @Body() updateUserDto: UpdateUserDto) {
-        if (req.user) {
-            return await this.usersService.updateCurrentUser(updateUserDto, req.user.id);
-        }
-        throw new UnauthorizedException();
+        return await this.usersService.updateCurrentUser(updateUserDto, req.user.id);
     }
 }
