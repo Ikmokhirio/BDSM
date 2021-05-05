@@ -30,4 +30,11 @@ export class GroupsService {
             }
         )
     }
+
+    async createNewGroup(user: Users, name: string) {
+        return await this.groupsRepository.save(await this.groupsRepository.create({
+            owner: user,
+            name: name
+        }));
+    }
 }
