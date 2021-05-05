@@ -31,6 +31,8 @@ export const EmailSender = ({}) => {
     const {groups, loading} = useTypedSelector(state => state.message);
     const componentIdMounted = useRef(true);
 
+    const [groupIds, setGroupIds] = useState<number[]>([]);
+
     useEffect(() => {
         return () => {
             componentIdMounted.current = false;
@@ -53,12 +55,12 @@ export const EmailSender = ({}) => {
             body: state.content,
             username: "test",
             password: "1234",
-            groupsIds: [1, 2, 3]
+            groupsIds: groupIds
         });
     }
 
     const onChange = (checkedValues: any) => { // TODO : set state
-        console.log(checkedValues);
+        setGroupIds(checkedValues);
     }
 
     const props = {
