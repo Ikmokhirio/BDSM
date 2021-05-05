@@ -19,10 +19,17 @@ export const fetchUser = () => {
             const json = await response.json();
 
             if (json.statusCode != "200") { // TODO : change to constant
-                dispatch({
-                    type: UserActionTypes.FETCH_USER_ERROR,
-                    payload: json.message
-                });
+                if(json.statusCode != "401") {
+                    dispatch({
+                        type: UserActionTypes.FETCH_USER_ERROR,
+                        payload: json.message
+                    });
+                } else {
+                    dispatch({
+                        type: UserActionTypes.FETCH_USER_ERROR,
+                        payload: "Неавторизирован"
+                    });
+                }
             } else {
                 dispatch({
                     type: UserActionTypes.FETCH_USER_SUCCESS,

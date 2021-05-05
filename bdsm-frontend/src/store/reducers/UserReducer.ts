@@ -70,7 +70,6 @@ const initialState: UserState = {
 export const userReducer = (state = initialState, action: UserAction): UserState => {
     switch (action.type) {
         case UserActionTypes.FETCH_USER:
-            message.success("Авторизация...");
             return {
                 loading: true, error: null, userData: {
                     username: null,
@@ -79,10 +78,10 @@ export const userReducer = (state = initialState, action: UserAction): UserState
                 }
             }
         case UserActionTypes.FETCH_USER_SUCCESS:
-            message.success("Успешно!");
+            message.success("Авторизация успешна!");
             return {loading: false, error: null, userData: action.payload};
         case UserActionTypes.FETCH_USER_ERROR:
-            message.error(`Произошла ошбика ${action.payload}`);
+            message.error(`Произошла ошбика при авторизации ${action.payload}`);
             return {
                 loading: false, error: action.payload, userData: {
                     username: null,

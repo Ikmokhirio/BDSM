@@ -11,7 +11,6 @@ import {useActions} from "../hooks/useActions";
 const {Header, Content, Sider} = Layout;
 const {SubMenu} = Menu;
 
-
 const PageHeader = () => {
 
     const [state, setState] = useState<userData>({
@@ -26,6 +25,7 @@ const PageHeader = () => {
     const handleClick = () => {
         logoutUser();
     }
+
 
     store.subscribe(() => {
             if (componentIdMounted.current) {
