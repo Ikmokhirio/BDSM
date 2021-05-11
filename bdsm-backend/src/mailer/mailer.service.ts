@@ -1,5 +1,5 @@
 import {Injectable} from '@nestjs/common';
-import {generateYandexConfig} from "../transportConfigs";
+import {generateYandexConfig, transportConfig} from "../transportConfigs";
 
 const nodemailer = require("nodemailer");
 
@@ -8,8 +8,8 @@ export class MailerService {
     constructor() {
     }
 
-    async testMessage() {
-        let transporter = nodemailer.createTransport(generateYandexConfig("login", "password"));
+    async sendMessageSmtp(config: transportConfig, job) {
+        let transporter = nodemailer.createTransport(config);
 
         try {
             await transporter.sendMail({
@@ -25,5 +25,14 @@ export class MailerService {
             return e;
         }
 
+    }
+
+    async sendMessageApi(email: string, body: string, subject: string, senderMail: string) {
+        console.log("Sending", body);
+        console.log("To", email);
+        console.log("Subject", subject);
+        console.log("By", senderMail);
+
+        // TODO : SEND EMAIl
     }
 }

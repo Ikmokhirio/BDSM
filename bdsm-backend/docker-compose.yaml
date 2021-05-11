@@ -35,9 +35,19 @@ services:
     depends_on:
       - postgres
     ports:
-     - ${PORT}:${PORT}
+      - ${PORT}:${PORT}
     command: yarn start:dev
     restart: always
+
+  redis:
+    image: "redis:alpine"
+    networks:
+      dev:
+        aliases:
+          - redis
+    depends_on:
+      - nodejs
+      - postgres
 networks:
   dev:
     external:

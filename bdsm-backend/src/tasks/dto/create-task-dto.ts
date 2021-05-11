@@ -1,4 +1,4 @@
-import {IsNotEmpty} from "class-validator";
+import {IsArray, IsNotEmpty} from "class-validator";
 
 export class CreateTaskDto {
 
@@ -11,7 +11,8 @@ export class CreateTaskDto {
     @IsNotEmpty()
     body: string;
 
+    @IsArray()
     @IsNotEmpty()
-    groupsIds: []
+    groupsIds: [number]
 
 }

@@ -6,10 +6,15 @@ import {CreateTaskDto} from "./dto/create-task-dto";
 import {Mails} from "../mails/entities/mails.entity";
 import {Users} from "../users/entities/users.entity";
 import {Groups} from "../groups/entities/groups.entity";
+import {InjectQueue} from "@nestjs/bull";
+import {Queue} from "bull";
+import {Targets} from "../targets/entities/targets.entity";
 
 @Injectable()
 export class TasksService {
     constructor(
+        @InjectQueue('mails')
+        private mailQueue: Queue,
         @InjectRepository(Tasks)
         private tasksRepository: Repository<Tasks>,
         @InjectRepository(Mails)
@@ -28,7 +33,7 @@ export class TasksService {
                     id: user.id
                 }
             })
-            console.log(userInstance);
+            // console.log(userInstance);
 
             const mail = await this.mailsRepository.save(
                 await this.mailsRepository.create({
@@ -36,10 +41,17 @@ export class TasksService {
                     body: createTaskDto.body
                 })
             );
-            console.log(mail);
+            // console.log(mail);
 
-            const findedGroups = await this.groupsRepository.findByIds(createTaskDto.groupsIds);
-            console.log(findedGroups);
+            const findedGroups = await this.groupsRepository.find({
+                relations: ["targets", "owner"],
+                where: {
+                    owner: {
+                        id: user.id
+                    }
+                }
+            });
+            // console.log(findedGroups);
             if (!findedGroups) {
                 return undefined;
             }
@@ -52,9 +64,25 @@ export class TasksService {
                 groups: findedGroups
             });
 
-            console.log(tempTask)
+            // console.log(tempTask)
 
             const task = await this.tasksRepository.save(tempTask);
+
+            // console.log("CREATING TASK");
+            findedGroups.forEach((group) => {
+                if (createTaskDto.groupsIds.includes(Number(group.id))) {
+                    this.mailQueue.add({
+                        targets: group.targets,
+                        body: mail.body,
+                        username: createTaskDto.username,
+                        password: createTaskDto.password,
+
+                    }, {
+                        removeOnComplete: true
+                    });
+                }
+            })
+            // console.log("FINISHED");
 
             return task;
 

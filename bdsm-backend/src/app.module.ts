@@ -9,10 +9,20 @@ import { TargetsModule } from './targets/targets.module';
 import { GroupsModule } from './groups/groups.module';
 import { TasksModule } from './tasks/tasks.module';
 import { MailerModule } from './mailer/mailer.module';
+import {BullModule} from "@nestjs/bull";
 
 @Module({
     imports: [
         TypeOrmModule.forRoot(),
+        BullModule.forRoot({
+            redis: {
+                host: 'redis',
+                port: 6379
+            }
+        }),
+        BullModule.registerQueueAsync({
+           name: "mails",
+        }),
         UsersModule,
         AuthModule,
         MailsModule,
@@ -22,7 +32,7 @@ import { MailerModule } from './mailer/mailer.module';
         MailerModule
     ],
     controllers: [AppController],
-    providers: [AppService],
+    providers: [AppService]
 })
 export class AppModule {
 }
